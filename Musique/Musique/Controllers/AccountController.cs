@@ -12,6 +12,7 @@ using Musique.Models;
 
 namespace Musique.Controllers
 {
+    [RequireHttps]
     [Authorize]
     public class AccountController : Controller
     {

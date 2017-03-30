@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Musique.Models.Music>
+﻿@model /*IEnumerable<MvcMovie2.Models.Movie>*/Musique.ViewModels.MusicsResponseVM
 
 @{
     ViewBag.Title = "Index";
@@ -7,32 +7,47 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+	@Model.FilteredMusicsCounter found / @Model.MusicsCounter movies
 </p>
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Musics", FormMethod.Get))
+{
+	<p>
+		Genre: @Html.DropDownList("MusicGenre", new SelectList(Model.MusicGenres), "All") <br />
+		Title: @Html.TextBox("MusicTitle") <br />
+		<input type="submit" value="Filter" />
+	</p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            ReleaseDate
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Artist)
+            Artist
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Album)
+            Album
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Genre)
+            Genre
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            Price
         </th>
+		<th>
+			Formats
+		</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Musics) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -52,6 +67,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Formats)
+		</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |

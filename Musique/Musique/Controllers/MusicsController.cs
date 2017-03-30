@@ -7,17 +7,41 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Musique.Models;
+using Musique.ViewModels;
 
 namespace Musique.Controllers
 {
+    [RequireHttps]
     public class MusicsController : Controller
     {
         private MusicDBContext db = new MusicDBContext();
 
         // GET: Musics
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(MusicsResearch filters)
         {
-            return View(db.Musics.ToList());
+            var musics = db.Musics.ToList();
+            var filteredMusics = new List<Music>();
+            filteredMusics = musics;
+
+            if (!string.IsNullOrEmpty(filters.MusicTitle))
+            {
+                filteredMusics = db.Musics.Where(c => c.Title.StartsWith(filters.MusicTitle)).ToList();
+            }
+            if (!string.IsNullOrEmpty(filters.MusicGenre))
+            {
+                filteredMusics = filteredMusics.Where(c => c.Genre == filters.MusicGenre).ToList();
+            }
+
+            MusicsResponseVM musicsResponseVM = new MusicsResponseVM()
+            {
+                FilteredMusicsCounter = filteredMusics.Count(),
+                MusicsCounter = musics.Count(),
+                Musics = filteredMusics/*db.Movies.Where(c => c.Title.StartsWith(title)).ToList()*/,
+                MusicGenres = db.Musics.Select(c => c.Genre).Distinct().ToList()
+            };
+
+            return View(musicsResponseVM);
         }
 
         // GET: Musics/Details/5
@@ -46,7 +70,7 @@ namespace Musique.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Artist,Album,Genre,Price")] Music music)
+        public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Artist,Album,Genre,Price,Formats")] Music music)
         {
             if (ModelState.IsValid)
             {
