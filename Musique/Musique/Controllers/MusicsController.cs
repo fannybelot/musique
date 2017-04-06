@@ -62,7 +62,10 @@ namespace Musique.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Music music = db.Musics.Find(id);
+            MusicDetailVM music = {
+                db.Musics.Find(id),
+                db.Comments.Select(c => c.Comment)
+            };
             if (music == null)
             {
                 return HttpNotFound();
@@ -73,8 +76,6 @@ namespace Musique.Controllers
         // GET: Musics/Create
         public ActionResult Create()
         {
-            List<Format> formats = Enum.GetValues(typeof(Format)).Cast<Format>().ToList<Format>();
-            ViewBag.formats = formats;
             return View();
         }
 
