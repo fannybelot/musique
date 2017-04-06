@@ -11,9 +11,11 @@ namespace Musique.ViewModels
         public string MusicGenre { get; set; }
         public string MusicTitle { get; set; }
         public string MusicArtist { get; set; }
+        public List<Format> MusicFormatsResearch { get; set; }
     }
     public class MusicsResponseVM
     {
+        public List<Format> MusicFormats { get; set;  }
         public List<string> MusicGenres { get; set; }
         public List<Music> Musics { get; set; }
         public int MusicsCounter { get; set; }
