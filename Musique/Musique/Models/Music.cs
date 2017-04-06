@@ -36,8 +36,7 @@ namespace Musique.Models
         [Range(1, 100)]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-
-        [Required]
+        
         public List<Format> Formats { get; set; }
     }
 }

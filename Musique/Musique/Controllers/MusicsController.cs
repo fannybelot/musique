@@ -33,7 +33,9 @@ namespace Musique.Controllers
                 filteredMusics = filteredMusics.Where(c => c.Genre == filters.MusicGenre).ToList();
             }
 
-            if (!filters.MusicFormatsResearch.Any()) {
+            List<Format> DiffFormats = new List<Format>() { Format.mp3, Format.flac, Format.wma, Format.wav };
+
+            if (filters.MusicFormatsResearch!=null) {
                 foreach (Format f in filters.MusicFormatsResearch)
                 {
                     filteredMusics = filteredMusics.Where(c => c.Formats.Contains(f)).ToList();
@@ -47,7 +49,7 @@ namespace Musique.Controllers
                 MusicsCounter = musics.Count(),
                 Musics = filteredMusics/*db.Movies.Where(c => c.Title.StartsWith(title)).ToList()*/,
                 MusicGenres = db.Musics.Select(c => c.Genre).Distinct().ToList(),
-                ///MusicFormats = DiffFormats
+                MusicFormats = DiffFormats
             };
 
             return View(musicsResponseVM);
