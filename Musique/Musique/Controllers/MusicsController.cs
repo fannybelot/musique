@@ -33,9 +33,9 @@ namespace Musique.Controllers
                 filteredMusics = filteredMusics.Where(c => c.Genre == filters.MusicGenre).ToList();
             }
 
-            List<Format> DiffFormats = new List<Format>() { mp3, flac, wma, wav };
+            List<Format> DiffFormats = new List<Format>() { Format.mp3, Format.flac, Format.wma, Format.wav };
 
-            if (!filters.MusicFormatsResearch.Any()) {
+            if (filters.MusicFormatsResearch!=null) {
                 foreach (Format f in filters.MusicFormatsResearch)
                 {
                     filteredMusics = filteredMusics.Where(c => c.Formats.Contains(f)).ToList();
