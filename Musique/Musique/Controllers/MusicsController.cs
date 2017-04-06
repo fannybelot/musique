@@ -62,15 +62,15 @@ namespace Musique.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MusicDetailVM music = {
-                db.Musics.Find(id),
-                db.Comments.Select(c => c.Comment)
+            MusicDetailVM musicDetail = new MusicDetailVM() {
+                Music = db.Musics.Find(id),
+                Comments = db.Comments.Where(c => c.MusicId == id).ToList()
             };
-            if (music == null)
+            if (musicDetail.Music == null)
             {
                 return HttpNotFound();
             }
-            return View(music);
+            return View(musicDetail);
         }
 
         // GET: Musics/Create

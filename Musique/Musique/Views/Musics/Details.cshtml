@@ -11,63 +11,63 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Music.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Music.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            @Html.DisplayNameFor(model => model.Music.ReleaseDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
+            @Html.DisplayFor(model => model.Music.ReleaseDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Artist)
+            @Html.DisplayNameFor(model => model.Music.Artist)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Artist)
+            @Html.DisplayFor(model => model.Music.Artist)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Album)
+            @Html.DisplayNameFor(model => model.Music.Album)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Album)
+            @Html.DisplayFor(model => model.Music.Album)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Genre)
+            @Html.DisplayNameFor(model => model.Music.Genre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Genre)
+            @Html.DisplayFor(model => model.Music.Genre)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Music.Price)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Music.Price)
         </dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.Formats)
+			@Html.DisplayNameFor(model => model.Music.Formats)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.Formats)
+			@Html.DisplayFor(model => model.Music.Formats)
 		</dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Music.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

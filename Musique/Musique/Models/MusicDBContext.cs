@@ -9,5 +9,6 @@ namespace Musique.Models
     public class MusicDBContext : DbContext
     {
         public DbSet<Music> Musics { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }
