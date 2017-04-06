@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Musique.Models;
 using Musique.ViewModels;
+using Musique.Services;
 
 namespace Musique.Controllers
 {
@@ -15,6 +16,7 @@ namespace Musique.Controllers
     public class MusicsController : Controller
     {
         private MusicDBContext db = new MusicDBContext();
+        private CommentsService commentsService = new CommentsService();
 
         // GET: Musics
         [HttpGet]
@@ -64,7 +66,7 @@ namespace Musique.Controllers
             }
             MusicDetailVM musicDetail = new MusicDetailVM() {
                 Music = db.Musics.Find(id),
-                Comments = db.Comments.Where(c => c.MusicId == id).ToList()
+                Comments = commentsService.GetCommentsByMusicId(id)
             };
             if (musicDetail.Music == null)
             {

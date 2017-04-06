@@ -211,6 +211,7 @@
     <Compile Include="Models\Music.cs" />
     <Compile Include="Models\MusicDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CommentsService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\MusicDetailVM.cs" />
     <Compile Include="ViewModels\MusicsResponseVM.cs" />
@@ -280,6 +281,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
