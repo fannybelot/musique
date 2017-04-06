@@ -33,8 +33,6 @@ namespace Musique.Controllers
                 filteredMusics = filteredMusics.Where(c => c.Genre == filters.MusicGenre).ToList();
             }
 
-            List<Format> DiffFormats = new List<Format>() { mp3, flac, wma, wav };
-
             if (!filters.MusicFormatsResearch.Any()) {
                 foreach (Format f in filters.MusicFormatsResearch)
                 {
@@ -49,7 +47,7 @@ namespace Musique.Controllers
                 MusicsCounter = musics.Count(),
                 Musics = filteredMusics/*db.Movies.Where(c => c.Title.StartsWith(title)).ToList()*/,
                 MusicGenres = db.Musics.Select(c => c.Genre).Distinct().ToList(),
-                MusicFormats = DiffFormats
+                ///MusicFormats = DiffFormats
             };
 
             return View(musicsResponseVM);
@@ -73,6 +71,8 @@ namespace Musique.Controllers
         // GET: Musics/Create
         public ActionResult Create()
         {
+            List<Format> formats = Enum.GetValues(typeof(Format)).Cast<Format>().ToList<Format>();
+            ViewBag.formats = formats;
             return View();
         }
 
