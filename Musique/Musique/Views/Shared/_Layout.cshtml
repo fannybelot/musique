@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    <title>@ViewBag.Title - JSP.Music</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -18,14 +18,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("JSP.Music", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Musiques", "Index", "Musics")</li>
                 </ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>@Html.ActionLink("Mon panier", "Index", "Cart")</li>
+				</ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -34,7 +36,9 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+			<li>@Html.ActionLink("About us", "About", "Home")</li>
+			<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <p>&copy; @DateTime.Now.Year - JSPMusic</p>
         </footer>
     </div>
 
