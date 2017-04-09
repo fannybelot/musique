@@ -164,29 +164,38 @@ namespace Musique.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult AddToCart(int? id)
+        //public ActionResult AddToCart(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Music music = db.Musics.Find(id);
+        //    if (music == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return PartialView("_AddToCart", id);
+        //}
+
+        // POST: Musics/AddToCart
+        [HttpPost, ActionName("AddToCart")]
+        public ActionResult AddToCard()
         {
-            if (id == null)
+            string id = Request["musicID"];
+            if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Music music = db.Musics.Find(id);
+            Music music = db.Musics.Find(Int32.Parse(id));
+
             if (music == null)
             {
                 return HttpNotFound();
             }
-            return View(music);
-        }
-
-        // POST: Musics/AddToCart
-        [HttpPost, ActionName("AddToCart")]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddToCartConfirmed(int id)
-        {
-            Music music = db.Musics.Find(id);
             //db.Musics.Remove(music);
             //db.SaveChanges();
-            return RedirectToAction("Index");
+            return PartialView("_AddToCart", music);
         }
     }
 }

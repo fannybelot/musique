@@ -1,4 +1,4 @@
-﻿@model /*IEnumerable<MvcMovie2.Models.Movie>*/Musique.ViewModels.MusicsResponseVM
+﻿@model Musique.ViewModels.MusicsResponseVM
 
 @{
     ViewBag.Title = "Index";
@@ -6,24 +6,15 @@
 
 <h2>Index</h2>
 
+<div id="addedToCart">
+</div>
+
 <p>
-	@Model.FilteredMusicsCounter found / @Model.MusicsCounter movies
+	@Model.FilteredMusicsCounter found / @Model.MusicsCounter musics
 </p>
 <p>
 	@Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm("Index", "Musics", FormMethod.Get))
-{
-	<p>
-		Genre: @Html.DropDownList("MusicGenre", new SelectList(Model.MusicGenres), "All") <br />
-		Title: @Html.TextBox("MusicTitle") <br />
-		Artist: @Html.TextBox("MusicArtist") <br />
-		Album: @Html.TextBox("MusicAlbum") <br />
-		Formats: @Html.ListBox("MusicFormatsResearch", new SelectList(Model.MusicFormats)) <br />
-		<input type="submit" value="Filter" />
-		@*<div class="form-group"><input type="text" class="form-control" /></div>*@
-	</p>
-}
 
 <table class="table">
     <tr>
@@ -31,25 +22,54 @@
             Title
         </th>
         <th>
-            ReleaseDate
-        </th>
-        <th>
             Artist
         </th>
         <th>
             Album
         </th>
+		<th>
+			ReleaseDate
+		</th>
         <th>
             Genre
-        </th>
-        <th>
-            Price
         </th>
 		<th>
 			Formats
 		</th>
+        <th>
+            Price
+        </th>
         <th></th>
     </tr>
+@using (Html.BeginForm("Index", "Musics", FormMethod.Get))
+{
+	<tr>
+		<td>
+			@Html.TextBox("MusicTitle", null, new { placeHolder = "Title", @class = "form-control" })
+		</td>
+		<td>
+			@Html.TextBox("MusicArtist", null, new { placeHolder = "Artist", @class = "form-control" })
+		</td>
+		<td>
+			@Html.TextBox("MusicAlbum", null, new { placeHolder = "Album", @class = "form-control" })
+		</td>
+		<td>
+			@Html.TextBox("MusicReleaseDate", null, new { placeHolder = "Release Date", @class = "form-control" })
+		</td>
+		<td>
+			@Html.DropDownList("MusicGenre", new SelectList(Model.MusicGenres), "All", new { @class = "form-control" })
+		</td>
+		<td>
+			@Html.ListBox("MusicFormatsResearch", new SelectList(Model.MusicFormats), new { @class = "form-control" })
+		</td>
+		<td>
+			@Html.TextBox("MusicPrice", null, new { placeHolder = "Price", @class = "form-control" })
+		</td>
+		<td>
+			<input type="submit" class="btn btn-primary" value="Filter" />
+		</td>
+	</tr>
+}
 
 @foreach (var item in Model.Musics) {
     <tr>
@@ -57,30 +77,78 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ReleaseDate)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Artist)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Album)
         </td>
+		<td>
+			@Html.DisplayFor(modelItem => item.ReleaseDate)
+		</td>
         <td>
             @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
         </td>
 		<td>
 			@Html.DisplayFor(modelItem => item.Formats)
 		</td>
         <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID }) |
-			@Html.ActionLink("AddToCart", "AddToCart", new { id = item.ID })
-        </td>
+			@*@{ Html.RenderPartial("_AddToCart", Model.Musics); }*@
+			<a href="#" data-toggle="modal" data-target="#modaltest">Add to cart</a>
+			<div id="modaltest" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Do you want to add this track to your cart ?</h4>
+						</div>
+						<div class="modal-body">
+							<dl class="dl-horizontal">
+								<dt>@Html.DisplayNameFor(model => item.Title)</dt>
+
+								<dd>@Html.DisplayFor(model => item.Title)</dd>
+
+								<dt>@Html.DisplayNameFor(model => item.Artist)</dt>
+
+								<dd>@Html.DisplayFor(model => item.Artist)</dd>
+
+								<dt>@Html.DisplayNameFor(model => item.Price)</dt>
+
+								<dd>@Html.DisplayFor(model => item.Price)</dd>
+
+							</dl>						
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="addToCart btn btn-primary" value="@item.ID">Add to cart</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>        
+		</td>
     </tr>
 }
 
 </table>
+
+<script type="text/javascript" defer>
+	$(document).ready(function () {
+		$('button.addToCart').on('click', function () {
+			var musicID = $(this).val();
+			$.ajax({
+				method: "POST",
+				url: "/Musics/AddToCart",
+				data: { musicID: musicID }
+			}).done(function (response) {
+				$('#addedToCart').html(response);
+				$('#modaltest').modal('hide');
+			});
+		});
+	});
+</script>
