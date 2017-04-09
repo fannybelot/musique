@@ -179,8 +179,8 @@ namespace Musique.Controllers
         //}
 
         // POST: Musics/AddToCart
-        [HttpPost, ActionName("AddToCart")]
-        public ActionResult AddToCard()
+        [HttpPost]
+        public ActionResult AddToCart()
         {
             string id = Request["musicID"];
             if (string.IsNullOrEmpty(id))
@@ -193,6 +193,7 @@ namespace Musique.Controllers
             {
                 return HttpNotFound();
             }
+            //Session["Musics"] = Cart.CartMusics.Add(music);
             //db.Musics.Remove(music);
             //db.SaveChanges();
             return PartialView("_AddToCart", music);
