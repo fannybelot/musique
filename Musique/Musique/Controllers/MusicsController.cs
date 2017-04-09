@@ -163,5 +163,25 @@ namespace Musique.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult AddToCart()
+        {
+            return View();
+        }
+
+        // POST: Musics/AddToCart
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddToCart([Bind(Include = "ID,Title,ReleaseDate,Artist,Album,Genre,Price,Formats")] Music music)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Musics.Add(music);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(music);
+        }
     }
 }
