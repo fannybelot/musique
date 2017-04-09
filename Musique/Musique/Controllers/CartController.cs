@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Musique.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,7 +13,12 @@ namespace Musique.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            return View();
+            Cart cart = new Cart();
+            cart.CartMusics = new List<Music>();
+            if (Session["Musics"] != null) {
+                cart.CartMusics = (List<Music>)Session["Musics"];
+            }
+            return View(cart);
         }
 
         // GET: Cart/Details/5
@@ -64,26 +71,31 @@ namespace Musique.Controllers
             }
         }
 
-        // GET: Cart/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Cart/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete()
         {
-            try
+            string id = Request["musicID2"];
+            if (string.IsNullOrEmpty(id))
             {
-                // TODO: Add delete logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
+            Cart cart = new Cart();
+            cart.CartMusics = new List<Music>();
+            if (Session["Musics"] != null)
             {
-                return View();
+                cart.CartMusics = (List<Music>)Session["Musics"];
             }
+
+            if (cart.CartMusics == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                cart.CartMusics.RemoveAll(c => c.ID == Int32.Parse(id));
+            }
+            return PartialView("_Remove");
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Musique.Controllers
             {
                 FilteredMusicsCounter = filteredMusics.Count(),
                 MusicsCounter = musics.Count(),
-                Musics = filteredMusics/*db.Movies.Where(c => c.Title.StartsWith(title)).ToList()*/,
+                Musics = filteredMusics,
                 MusicGenres = db.Musics.Select(c => c.Genre).Distinct().ToList(),
                 MusicFormats = DiffFormats
             };
@@ -129,30 +129,24 @@ namespace Musique.Controllers
             return View(music);
         }
 
-        // GET: Musics/Delete/5
-        public ActionResult Delete(int? id)
+        // POST: Musics/Delete/5
+        [HttpPost]
+        public ActionResult Delete()
         {
-            if (id == null)
+            string id = Request["musicID2"];
+            if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Music music = db.Musics.Find(id);
+            Music music = db.Musics.Find(Int32.Parse(id));
+
             if (music == null)
             {
                 return HttpNotFound();
             }
-            return View(music);
-        }
-
-        // POST: Musics/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Music music = db.Musics.Find(id);
             db.Musics.Remove(music);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return PartialView("_Delete", music);
         }
 
         protected override void Dispose(bool disposing)
