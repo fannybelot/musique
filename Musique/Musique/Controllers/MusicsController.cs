@@ -193,9 +193,13 @@ namespace Musique.Controllers
             {
                 return HttpNotFound();
             }
-            //Session["Musics"] = Cart.CartMusics.Add(music);
-            //db.Musics.Remove(music);
-            //db.SaveChanges();
+            List<Music> cartMusics = (List<Music>)Session["Musics"];
+            if (cartMusics == null)
+            {
+                cartMusics = new List<Music>();
+            }
+            cartMusics.Add(music);
+            Session["Musics"] = cartMusics;
             return PartialView("_AddToCart", music);
         }
     }
