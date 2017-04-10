@@ -4,20 +4,11 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details of @Model.Music.Title</h2>
+<hr />
 
 <div>
-    <h4>Music</h4>
-    <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Music.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Music.Title)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Music.ReleaseDate)
         </dt>
@@ -64,11 +55,10 @@
 		<dd>
 			@Html.DisplayFor(model => model.Music.Formats)
 		</dd>
-
     </dl>
+    <p class="text-right">
+        <a href="@Url.Action("Index", "Musics")" class="btn btn-warning">Back to list <span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+        <a href="@Url.Action("Edit", "Musics", new { id = Model.Music.ID })" class="btn btn-primary">Edit <span class="glyphicon glyphicon-pencil"></span></a>
+        <!--<a href="@Url.Action("AddToCart", "Musics", new { id = Model.Music.ID })" class="btn btn-success">Add to cart <span class="glyphicon glyphicon-plus-sign"></span></a>-->
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Music.ID }) |
-	@Html.ActionLink("AddToCart", "AddToCart", new { id = Model.Music.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
