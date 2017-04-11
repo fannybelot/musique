@@ -58,11 +58,11 @@ namespace Musique
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "290826281854-3c9trs330aho4rum97bbsl4a7vbo44gt.apps.googleusercontent.com",
+                ClientSecret = "09bkzFHrJQVQeD7v-HBYeIKk"
+            });
         }
     }
 }

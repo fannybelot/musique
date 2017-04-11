@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Musique.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Courrier électronique")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Index(IsUnique = true)]
+        public string Surname { get; set; }
     }
 
     public class ExternalLoginListViewModel
