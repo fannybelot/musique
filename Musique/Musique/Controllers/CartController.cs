@@ -74,7 +74,7 @@ namespace Musique.Controllers
         [HttpPost]
         public ActionResult Delete()
         {
-            string id = Request["musicID2"];
+            string id = Request["musicIDrm"];
             if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -20,10 +20,6 @@ namespace Musique.Models
         public int UserId { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 3)]
-        public string Title { get; set; }
-
-        [Required]
         [StringLength(1000, MinimumLength = 3)]
         public string Content { get; set; }
 

@@ -7,6 +7,11 @@
 <h2>Details of @Model.Music.Title</h2>
 <hr />
 
+<div id="addedToCart">
+</div>
+<div id="removedFromCart">
+</div>
+
 <div>
     <dl class="dl-horizontal">
         <dt>
@@ -59,6 +64,49 @@
     <p class="text-right">
         <a href="@Url.Action("Index", "Musics")" class="btn btn-warning">Back to list <span class="glyphicon glyphicon-circle-arrow-left"></span></a>
         <a href="@Url.Action("Edit", "Musics", new { id = Model.Music.ID })" class="btn btn-primary">Edit <span class="glyphicon glyphicon-pencil"></span></a>
-        <!--<a href="@Url.Action("AddToCart", "Musics", new { id = Model.Music.ID })" class="btn btn-success">Add to cart <span class="glyphicon glyphicon-plus-sign"></span></a>-->
+		<button id="removeFromCartBtn" type="button" class="btn btn-danger is-hidden" value="@Model.Music.ID">Remove from cart</button>
+		<button id="addToCartBtn" type="button" class="btn btn-success" value="@Model.Music.ID">Add to cart</button>
     </p>
+</div>
+
+<script type="text/javascript" defer>
+	$(document).ready(function () {
+		$('#addToCartBtn').on('click', function () {
+			var musicIDadd = $(this).val();
+			$.ajax({
+				method: "POST",
+				url: "/Musics/AddToCart",
+				data: { musicIDadd: musicIDadd }
+			}).done(function (response) {
+				$('#addedToCart').html(response);
+				$('#addToCartBtn').addClass('is-hidden');
+				$('#removeFromCartBtn').removeClass('is-hidden');
+			});
+		});
+		$('#removeFromCartBtn').on('click', function () {
+			var musicIDrm = $(this).val();
+			$.ajax({
+				method: "POST",
+				url: "/Cart/Delete",
+				data: { musicIDrm: musicIDrm }
+			}).done(function (response) {
+				$('#removedFromCart').html(response);
+				$('#removeFromCartBtn').addClass('is-hidden');
+				$('#addToCartBtn').removeClass('is-hidden');
+			});
+		});
+	});
+</script>
+
+<div>
+	@foreach (var comment in Model.Comments)
+	{
+		<head>
+			<title>@Html.DisplayFor(modelComment => comment.UserId)</title>
+		</head>
+		<body>
+			<p>@Html.DisplayFor(modelComment => comment.Rating)</p>
+			<p>@Html.DisplayFor(modelComment => comment.Content)</p>
+		</body>
+	}
 </div>

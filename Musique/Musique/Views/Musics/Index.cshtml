@@ -129,7 +129,7 @@
 						</div>
 					</div>
 				</div>
-			</div> |
+			</div> @*|
 			<a href="#" data-toggle="modal" data-target="#modaladd@(item.ID)">Add to cart</a>
 			<div id="modaladd@(item.ID)" class="modal fade" role="dialog">
 				<div class="modal-dialog">
@@ -161,28 +161,28 @@
 					</div>
 
 				</div>
-			</div>        
+			</div>*@        
 		</td>
     </tr>
 }
 
 </table>
 
-<script type="text/javascript" defer>
+@*<script type="text/javascript" defer>
 	$(document).ready(function () {
 		$('button.addToCart').on('click', function () {
-			var musicID = $(this).val();
+			var musicIDadd = $(this).val();
 			$.ajax({
 				method: "POST",
 				url: "/Musics/AddToCart",
-				data: { musicID: musicID }
+				data: { musicIDadd: musicIDadd }
 			}).done(function (response) {
 				$('#addedToCart').html(response);
-				$('#modaladd' + musicID).modal('hide');
+				$('#modaladd' + musicIDadd).modal('hide');
 			});
 		});
 	});
-</script>
+</script>*@
 
 <script type="text/javascript" defer>
 	$(document).ready(function () {

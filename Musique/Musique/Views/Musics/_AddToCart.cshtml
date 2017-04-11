@@ -1,6 +1,16 @@
-﻿@model Musique.Models.Music
+﻿@model bool
 
-<div class="alert alert-success alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	The track has been successfully added to your cart.
-</div>
+@if (Model==true)
+{
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		The track is already in your cart.
+	</div>
+}
+else
+{
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		The track has been successfully added to your cart.
+	</div>
+}

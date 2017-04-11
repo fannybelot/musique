@@ -37,13 +37,13 @@ namespace Musique.Controllers
 
             List<Format> DiffFormats = new List<Format>() { Format.mp3, Format.flac, Format.wma, Format.wav };
 
-            if (filters.MusicFormatsResearch!=null) {
+            if (filters.MusicFormatsResearch != null) {
                 foreach (Format f in filters.MusicFormatsResearch)
                 {
                     filteredMusics = filteredMusics.Where(c => c.Formats.Contains(f)).ToList();
                 }
             }
-            
+
 
             MusicsResponseVM musicsResponseVM = new MusicsResponseVM()
             {
@@ -176,7 +176,7 @@ namespace Musique.Controllers
         [HttpPost]
         public ActionResult AddToCart()
         {
-            string id = Request["musicID"];
+            string id = Request["musicIDadd"];
             if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -187,14 +187,36 @@ namespace Musique.Controllers
             {
                 return HttpNotFound();
             }
-            List<Music> cartMusics = (List<Music>)Session["Musics"];
-            if (cartMusics == null)
+
+            List<Music> cartMusics;
+            if (Session["Musics"] == null)
             {
                 cartMusics = new List<Music>();
+            } else
+            {
+                cartMusics = (List<Music>)Session["Musics"];
             }
-            cartMusics.Add(music);
+
+            if (/*cartMusics.Contains(music)*/Contient(cartMusics, id) == false)
+            {
+                cartMusics.Add(music);
+                Session["Musics"] = cartMusics;
+                return PartialView("_AddToCart", false);
+            }
             Session["Musics"] = cartMusics;
-            return PartialView("_AddToCart", music);
+            return PartialView("_AddToCart", true);
+        }
+
+        public bool Contient(List<Music> cartMusics, string id) 
+        {
+            foreach (var cartMusic in cartMusics)
+            {
+                if (cartMusic.ID == (Int32.Parse(id))) 
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
