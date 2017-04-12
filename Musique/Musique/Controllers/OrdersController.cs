@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Musique.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,9 +28,15 @@ namespace Musique.Controllers
             return View();
         }
 
-        // POST: Orders/Create
+        // GET: Orders/Validate
+        [HttpGet]
+        public ActionResult Validate()
+        {
+            return View();
+        }
+        // POST: Orders/Validate
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Validate(Cart cart)
         {
             try
             {

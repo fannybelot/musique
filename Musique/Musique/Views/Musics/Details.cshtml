@@ -75,7 +75,7 @@
 			var musicIDadd = $(this).val();
 			$.ajax({
 				method: "POST",
-				url: "/Musics/AddToCart",
+				url: "/Cart/AddToCart",
 				data: { musicIDadd: musicIDadd }
 			}).done(function (response) {
 				$('#addedToCart').html(response);

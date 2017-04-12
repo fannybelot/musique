@@ -10,6 +10,8 @@ namespace Musique.Controllers
 {
     public class CartController : Controller
     {
+        private MusicDBContext db = new MusicDBContext();
+
         // GET: Cart
         public ActionResult Index()
         {
@@ -27,48 +29,52 @@ namespace Musique.Controllers
             return View();
         }
 
-        // GET: Cart/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Cart/Create
+        // POST: Cart/AddToCart
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult AddToCart()
         {
-            try
+            string id = Request["musicIDadd"];
+            if (string.IsNullOrEmpty(id))
             {
-                // TODO: Add insert logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Music music = db.Musics.Find(Int32.Parse(id));
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (music == null)
             {
-                return View();
+                return HttpNotFound();
             }
+
+            List<Music> cartMusics;
+            if (Session["Musics"] == null)
+            {
+                cartMusics = new List<Music>();
+            }
+            else
+            {
+                cartMusics = (List<Music>)Session["Musics"];
+            }
+
+            if (/*cartMusics.Contains(music)*/Contient(cartMusics, id) == false)
+            {
+                cartMusics.Add(music);
+                Session["Musics"] = cartMusics;
+                return PartialView("_AddToCart", music);
+            }
+            Session["Musics"] = cartMusics;
+            return PartialView("_AlreadyInCart", music);
         }
 
-        // GET: Cart/Edit/5
-        public ActionResult Edit(int id)
+        public bool Contient(List<Music> cartMusics, string id)
         {
-            return View();
-        }
-
-        // POST: Cart/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            foreach (var cartMusic in cartMusics)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (cartMusic.ID == (Int32.Parse(id)))
+                {
+                    return true;
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return false;
         }
 
         [HttpPost]
@@ -87,6 +93,7 @@ namespace Musique.Controllers
                 cart.CartMusics = (List<Music>)Session["Musics"];
             }
 
+            Music music = db.Musics.Find(Int32.Parse(id));
             if (cart.CartMusics == null)
             {
                 return HttpNotFound();
@@ -95,7 +102,7 @@ namespace Musique.Controllers
             {
                 cart.CartMusics.RemoveAll(c => c.ID == Int32.Parse(id));
             }
-            return PartialView("_Remove");
+            return PartialView("_Remove", music);
         }
     }
 }

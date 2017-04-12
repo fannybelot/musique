@@ -295,15 +295,16 @@
     <Content Include="Views\Musics\Details.cshtml" />
     <Content Include="Views\Musics\Edit.cshtml" />
     <Content Include="Views\Musics\Index.cshtml" />
-    <Content Include="Views\Musics\_AddToCart.cshtml" />
+    <Content Include="Views\Cart\_AddToCart.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Musics\_Delete.cshtml" />
     <Content Include="Views\Cart\_Remove.cshtml" />
+    <Content Include="Views\Cart\_AlreadyInCart.cshtml" />
+    <Content Include="Views\Orders\Validate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\" />
-    <Folder Include="Views\Orders\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
