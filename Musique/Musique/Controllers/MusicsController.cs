@@ -36,13 +36,18 @@ namespace Musique.Controllers
                 filteredMusics = filteredMusics.Where(c => c.Genre == filters.MusicGenre).ToList();
             }
 
-            List<Format> DiffFormats = new List<Format>() { Format.mp3, Format.flac, Format.wma, Format.wav };
+            List<string> DiffFormats = new List<string>() { "mp3", "m4a", "wma", "wav" };
 
             if (filters.MusicFormatsResearch != null) {
-                foreach (Format f in filters.MusicFormatsResearch)
+                List<string> musiques = new List<string>();
+                foreach (string f in filters.MusicFormatsResearch)
                 {
-                    filteredMusics = filteredMusics.Where(c => c.Formats.Contains(f)).ToList();
+                    foreach (var file in Directory.GetFiles("C:/Users/Fanny/Source/Repos/musique/Musique/Musique/Data", "*." + f))
+                    {
+                        musiques.Add(Path.GetFileNameWithoutExtension(file));
+                    }
                 }
+                filteredMusics = filteredMusics.Where(c => musiques.Contains(c.Title)).ToList();
             }
 
 
@@ -97,9 +102,18 @@ namespace Musique.Controllers
                     if (file != null && file.ContentLength > 0)
                     {
                         string extension = Path.GetExtension(file.FileName);
-                        string fileName = Request["Title"] + extension;
-                        var path = Path.Combine(Server.MapPath("../Data"), fileName);
-                        file.SaveAs(path);
+                        string format = extension.Substring(1);
+                        List<string> DiffFormats = new List<string>() { "mp3", "m4a", "wma", "wav" };
+                        if (DiffFormats.Contains(format))
+                        {
+                            string fileName = Request["ID"] + extension;
+                            var path = Path.Combine(Server.MapPath("../Data"), fileName);
+                            file.SaveAs(path);
+                        }
+                        else
+                        {
+                            throw new System.ArgumentException("Format non accepté", "extension");
+                        }
                     }
                 }               
             }

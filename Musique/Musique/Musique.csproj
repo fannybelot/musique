@@ -197,25 +197,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703301236267_InitialCreate.cs" />
-    <Compile Include="Migrations\201703301236267_InitialCreate.Designer.cs">
-      <DependentUpon>201703301236267_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703301254545_AddMusic.cs" />
-    <Compile Include="Migrations\201703301254545_AddMusic.Designer.cs">
-      <DependentUpon>201703301254545_AddMusic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704101220574_Comments1.cs" />
-    <Compile Include="Migrations\201704101220574_Comments1.Designer.cs">
-      <DependentUpon>201704101220574_Comments1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704101244502_201704101220574_Comments1.cs" />
-    <Compile Include="Migrations\201704101244502_201704101220574_Comments1.Designer.cs">
-      <DependentUpon>201704101244502_201704101220574_Comments1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704111500389_AddSurname.cs" />
-    <Compile Include="Migrations\201704111500389_AddSurname.Designer.cs">
-      <DependentUpon>201704111500389_AddSurname.cs</DependentUpon>
+    <Compile Include="Migrations\201704121355183_Initial.cs" />
+    <Compile Include="Migrations\201704121355183_Initial.Designer.cs">
+      <DependentUpon>201704121355183_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -232,9 +216,20 @@
     <Compile Include="ViewModels\MusicsResponseVM.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-Musique-20170323023939.mdf" />
+    <Content Include="App_Data\aspnet-Musique-20170323023939_log.ldf">
+      <DependentUpon>aspnet-Musique-20170323023939.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\database.mdf" />
+    <Content Include="App_Data\database_log.ldf">
+      <DependentUpon>database.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="database.mdf" />
+    <Content Include="database_log.ldf">
+      <DependentUpon>database.mdf</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -303,7 +298,6 @@
     <Content Include="Views\Orders\Validate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Data\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
@@ -323,20 +317,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703301236267_InitialCreate.resx">
-      <DependentUpon>201703301236267_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703301254545_AddMusic.resx">
-      <DependentUpon>201703301254545_AddMusic.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704101220574_Comments1.resx">
-      <DependentUpon>201704101220574_Comments1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704101244502_201704101220574_Comments1.resx">
-      <DependentUpon>201704101244502_201704101220574_Comments1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704111500389_AddSurname.resx">
-      <DependentUpon>201704111500389_AddSurname.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704121355183_Initial.resx">
+      <DependentUpon>201704121355183_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

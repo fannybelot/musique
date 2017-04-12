@@ -10,7 +10,6 @@ namespace Musique.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Musique.Models.MusicDBContext";
         }
 
         protected override void Seed(Musique.Models.MusicDBContext context)

@@ -6,7 +6,6 @@ using System.Web;
 
 namespace Musique.Models
 {
-    public enum Format { mp3, flac, wma, wav };
     public class Music
     {
         [Required]
@@ -36,7 +35,5 @@ namespace Musique.Models
         [Range(1, 100)]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-        
-        public List<Format> Formats { get; set; }
     }
 }

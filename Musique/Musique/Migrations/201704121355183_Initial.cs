@@ -3,10 +3,22 @@ namespace Musique.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Comments",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        MusicId = c.Int(nullable: false),
+                        UserId = c.Int(nullable: false),
+                        Content = c.String(nullable: false, maxLength: 1000),
+                        Rating = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
             CreateTable(
                 "dbo.Musics",
                 c => new
@@ -26,6 +38,7 @@ namespace Musique.Migrations
         public override void Down()
         {
             DropTable("dbo.Musics");
+            DropTable("dbo.Comments");
         }
     }
 }
