@@ -112,7 +112,7 @@ else
 			<table class="table">
 				<tr>
 					<th>
-						<a href="@Url.Action("Validate", "Orders", Model.CartMusics)" class="btn btn-success">Finalize my purchase <span class="glyphicon glyphicon-euro"></span></a>
+						<a href="@Url.Action("Place", "Orders", Model.CartMusics)" class="btn btn-success">Place my order <span class="glyphicon glyphicon-euro"></span></a>
 					</th>
 				</tr>
 				@foreach (var item in Model.CartMusics)
