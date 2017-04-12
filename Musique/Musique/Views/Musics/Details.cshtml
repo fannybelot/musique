@@ -102,7 +102,7 @@
 	@foreach (var comment in Model.Comments)
 	{
 		<head>
-			<title>@Html.DisplayFor(modelComment => comment.UserId)</title>
+			<title>@Html.DisplayFor(modelComment => comment.UserName)</title>
 		</head>
 		<body>
 			<p>@Html.DisplayFor(modelComment => comment.Rating)</p>

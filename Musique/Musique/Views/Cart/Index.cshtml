@@ -64,7 +64,10 @@ else
 							@Html.DisplayFor(modelItem => item.Genre)
 						</td>
 						<td>
-							@Html.DisplayFor(modelItem => item.Formats)
+							@foreach (var file in Directory.GetFiles("C:/Users/Fanny/Source/Repos/musique/Musique/Musique/Data", item.Title + ".*"))
+							{
+								<p>@Path.GetExtension(file)</p>
+							}
 						</td>
 						<td>
 							@Html.DisplayFor(modelItem => item.Price)
