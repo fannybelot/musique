@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Musique.Models;
+using System.Web.Security;
 
 namespace Musique.Controllers
 {
+    [Authorize]
+    [RequireHttps]
     public class CommentsController : Controller
     {
+        private MusicDBContext db = new MusicDBContext();
+
         // GET: Comments
         public ActionResult Index()
         {
@@ -28,18 +34,20 @@ namespace Musique.Controllers
 
         // POST: Comments/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Content,Rating,MusicId")] Comment Comment)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            Comment.CommentDate = DateTime.Now;
+            Comment.UserName = Membership.GetUser().UserName;
 
+            if (ModelState.IsValid)
+            {
+                db.Comments.Add(Comment);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         // GET: Comments/Edit/5

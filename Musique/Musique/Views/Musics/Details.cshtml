@@ -53,13 +53,17 @@
         <dd>
             @Html.DisplayFor(model => model.Music.Price)
         </dd>
-		@*<dt>
-			@Html.DisplayNameFor(model => model.Music.Formats)
+		<dt>
+			Formats
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.Music.Formats)
-		</dd>*@
+            @foreach (var file in Directory.GetFiles("C:/Users/Fanny/Source/Repos/musique/Musique/Musique/Data", Model.Music.Title + ".*"))
+            {
+                <p>@Path.GetExtension(file)</p>
+                <audio src="~/Data/@(file)"></audio>
+            }
+        </dd>
     </dl>
     <p class="text-right">
         <a href="@Url.Action("Index", "Musics")" class="btn btn-warning">Back to list <span class="glyphicon glyphicon-circle-arrow-left"></span></a>
@@ -99,14 +103,26 @@
 </script>
 
 <div>
-	@foreach (var comment in Model.Comments)
-	{
-		<head>
-			<title>@Html.DisplayFor(modelComment => comment.UserName)</title>
-		</head>
-		<body>
-			<p>@Html.DisplayFor(modelComment => comment.Rating)</p>
-			<p>@Html.DisplayFor(modelComment => comment.Content)</p>
-		</body>
-	}
+@foreach (var comment in Model.Comments)
+{
+	<div>
+		<h3>@Html.DisplayFor(modelComment => comment.UserName)</h3>
+		<p>@Html.DisplayFor(modelComment => comment.Rating)</p>
+		<p>@Html.DisplayFor(modelComment => comment.Content)</p>
+	</div>
+}
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    <div>
+    @using (Html.BeginForm("Create", "Comments", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Comment</h4>
+        <div class="form-group">
+            <input type="number" name="rating" class="form-control" />
+            <textarea name="content" class="form-control" maxlength="1000"></textarea>
+        </div>
+    }
+    </div>
+}
 </div>
