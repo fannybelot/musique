@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Musique.Models;
 using Musique.ViewModels;
 using Musique.Services;
+using System.IO;
 
 namespace Musique.Controllers
 {
@@ -88,6 +89,20 @@ namespace Musique.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Artist,Album,Genre,Price,Formats")] Music music)
         {
+            if (Request.Files.Count > 0)
+            {
+                for (int i=0; i<Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        string extension = Path.GetExtension(file.FileName);
+                        string fileName = Request["Title"] + extension;
+                        var path = Path.Combine(Server.MapPath("../Data"), fileName);
+                        file.SaveAs(path);
+                    }
+                }               
+            }
             if (ModelState.IsValid)
             {
                 db.Musics.Add(music);
