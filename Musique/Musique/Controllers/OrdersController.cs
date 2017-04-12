@@ -34,7 +34,7 @@ namespace Musique.Controllers
         }
 
         // GET: Orders/Create
-        public ActionResult Validate()
+        public ActionResult Place()
         {
             return View();
         }
