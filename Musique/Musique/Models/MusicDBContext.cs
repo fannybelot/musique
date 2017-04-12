@@ -10,5 +10,6 @@ namespace Musique.Models
     {
         public DbSet<Music> Musics { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

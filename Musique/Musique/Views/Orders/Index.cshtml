@@ -1,0 +1,29 @@
+﻿@model Musique.ViewModels.OrdersResponseVM;
+
+@{
+    ViewBag.Title = "My tracks";
+}
+
+<h2>My tracks</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Track</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Orders)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Music.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Music.Artist)</td>
+            <td>@Html.DisplayFor(modelItem => item.Music.Album)</td>
+            <td><a href="/Musics/Download/@(item.Music.ID)">Download</a></td>
+        </tr>
+    }
+    </tbody>
+</table>

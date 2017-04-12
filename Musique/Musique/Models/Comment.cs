@@ -17,7 +17,7 @@ namespace Musique.Models
         public int MusicId { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(1000, MinimumLength = 3)]

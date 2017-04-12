@@ -1,19 +1,30 @@
 ﻿using Musique.Models;
+using Musique.Services;
+using Musique.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Musique.Controllers
 {
+    [RequireHttps]
     [Authorize]
     public class OrdersController : Controller
     {
+        private MusicDBContext db = new MusicDBContext();
+        private OrdersService ordersService = new OrdersService();
+
         // GET: Orders
         public ActionResult Index()
         {
-            return View();
+            OrdersResponseVM ordersVM = new OrdersResponseVM()
+            {
+                Orders = ordersService.GetOrdersByUserName(Membership.GetUser().UserName)
+            };
+            return View(ordersVM);
         }
 
         // GET: Orders/Details/5
@@ -28,26 +39,26 @@ namespace Musique.Controllers
             return View();
         }
 
-        // GET: Orders/Validate
-        [HttpGet]
-        public ActionResult Validate()
-        {
-            return View();
-        }
         // POST: Orders/Validate
         [HttpPost]
-        public ActionResult Validate(Cart cart)
+        [ValidateAntiForgeryToken]
+        public ActionResult Validate()
         {
-            try
+            if (Session["Musics"] == null)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                return Redirect(Request.UrlReferrer.ToString());
             }
-            catch
+            List<Music> cartMusics = (List<Music>)Session["Musics"];
+            foreach (var music in cartMusics)
             {
-                return View();
+                Order order = new Order();
+                order.MusicId = music.ID;
+                order.UserName = Membership.GetUser().UserName;
+                order.OrderDate = DateTime.Now;
+                db.Orders.Add(order);
+                db.SaveChanges();
             }
+            return Redirect("/Orders/Index");
         }
 
         // GET: Orders/Edit/5
