@@ -9,7 +9,7 @@ namespace Musique.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Musique.Models.MusicDBContext context)

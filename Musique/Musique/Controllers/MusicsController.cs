@@ -94,33 +94,33 @@ namespace Musique.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Artist,Album,Genre,Price,Formats")] Music music)
         {
-            if (Request.Files.Count > 0)
-            {
-                for (int i=0; i<Request.Files.Count; i++)
-                {
-                    var file = Request.Files[i];
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        string extension = Path.GetExtension(file.FileName);
-                        string format = extension.Substring(1);
-                        List<string> DiffFormats = new List<string>() { "mp3", "m4a", "wma", "wav" };
-                        if (DiffFormats.Contains(format))
-                        {
-                            string fileName = Request["ID"] + extension;
-                            var path = Path.Combine(Server.MapPath("../Data"), fileName);
-                            file.SaveAs(path);
-                        }
-                        else
-                        {
-                            throw new System.ArgumentException("Format non accepté", "extension");
-                        }
-                    }
-                }               
-            }
             if (ModelState.IsValid)
             {
                 db.Musics.Add(music);
                 db.SaveChanges();
+                if (Request.Files.Count > 0)
+                {
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        var file = Request.Files[i];
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            string extension = Path.GetExtension(file.FileName);
+                            string format = extension.Substring(1);
+                            List<string> DiffFormats = new List<string>() { "mp3", "m4a", "wma", "wav" };
+                            if (DiffFormats.Contains(format))
+                            {
+                                string fileName = music.ID + extension;
+                                var path = Path.Combine(Server.MapPath("../Data"), fileName);
+                                file.SaveAs(path);
+                            }
+                            else
+                            {
+                                throw new System.ArgumentException("Format non accepté", "extension");
+                            }
+                        }
+                    }
+                }
                 return RedirectToAction("Index");
             }
 
@@ -149,6 +149,29 @@ namespace Musique.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,ReleaseDate,Artist,Album,Genre,Price")] Music music)
         {
+            if (Request.Files.Count > 0)
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        string extension = Path.GetExtension(file.FileName);
+                        string format = extension.Substring(1);
+                        List<string> DiffFormats = new List<string>() { "mp3", "m4a", "wma", "wav" };
+                        if (DiffFormats.Contains(format))
+                        {
+                            string fileName = Request["ID"] + extension;
+                            var path = Path.Combine(Server.MapPath("../Data"), fileName);
+                            file.SaveAs(path);
+                        }
+                        else
+                        {
+                            throw new System.ArgumentException("Format non accepté", "extension");
+                        }
+                    }
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(music).State = EntityState.Modified;
@@ -176,6 +199,19 @@ namespace Musique.Controllers
             db.Musics.Remove(music);
             db.SaveChanges();
             return PartialView("_Delete", music);
+        }
+
+        // POST: Musics/DeleteFile
+        [HttpPost]
+        public ActionResult DeleteFile()
+        {
+            string file = Request["file"];
+            if (System.IO.File.Exists("C:/Users/Fanny/Source/Repos/musique/Musique/Musique/Data" + file))
+            {
+                System.IO.File.Delete("~/Data/" + file);
+                return PartialView("_DeleteFile", file);
+            }
+            return PartialView("_FileNoExist", file);
         }
 
         protected override void Dispose(bool disposing)

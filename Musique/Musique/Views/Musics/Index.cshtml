@@ -91,7 +91,7 @@
             @Html.DisplayFor(modelItem => item.Genre)
         </td>
 		<td>
-			@foreach (var file in Directory.GetFiles("C:/Users/Fanny/Source/Repos/musique/Musique/Musique/Data", item.Title+".*"))
+			@foreach (var file in Directory.GetFiles("C:/Users/Fanny/Source/Repos/musique/Musique/Musique/Data", item.ID+".*"))
 			{
 				<p>@Path.GetExtension(file)</p>
 			}
