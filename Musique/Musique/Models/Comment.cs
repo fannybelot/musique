@@ -23,6 +23,9 @@ namespace Musique.Models
         [StringLength(1000, MinimumLength = 3)]
         public string Content { get; set; }
 
+        [Required]
+        public System.DateTime CommentDate { get; set; }
+
         [Range(0,5)]
         public int Rating { get; set; }
     }
